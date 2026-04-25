@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    <div id="startScreen">
+    <div id="startScreen" class="screen show">
         <div id="ybluiPresents"><span>YBLUI PRESENTS</span></div>
         <div id="abContainer">
             <div id="largeA" class="block-large block-a"><span>A</span></div>
@@ -17,12 +19,57 @@
         <div id="bottomText">An original puzzle game</div>
         <div id="bottomTextMinor">Click to continue</div>
     </div>
-    <div id="menu">
-        <div>Tutorial</div>
-        <div>Free Play</div>
-        <div>Today's Puzzles</div>
-        <div>About</div>
+    <div id="menu" class="screen">
+        <div id="abContainerMedium">
+            <div id="mediumA" class="block-medium block-a"><span>A</span></div>
+            <div id="mediumPlus" class="block-medium block-plus"><span>+</span></div>
+            <div id="mediumB" class="block-medium block-b"><span>B</span></div>
+        </div>
+        <div class="option" id="tutorialButton">Tutorial</div>
+        <div class="option">Free Play</div>
+        <div class="option">Today's Puzzles</div>
+        <div class="option">Settings</div>
+        <div class="option">About</div>
+    </div>
+    <div id="tutorial" class="screen">
+        <div class="option">Welcome to the tutorial!</div>
+        <div class="option">The objective is to complete the board by filling in A's, +'s, and B's...</div>
+        <div class="option">So that all filled grids form sequences of "A+B", horizontally, vertically or diagonally.
+        </div>
+        <div class="board">
+            <div class="row">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+            <div class="row">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+            <div class="row">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+            <div class="row">
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+                <div class="cell"></div>
+            </div>
+        </div>
+    </div>
+    <div id="freePlayMenu" class="screen">
+        <div class="option">Select a size to play...</div>
+    </div>
+    <div id="todaysPuzzlesMenu" class="screen">
+        <div class="option">Select a size to play...</div>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

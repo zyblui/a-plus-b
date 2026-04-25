@@ -135,3 +135,11 @@ function addChild(tree, positions) {
         tree.push(...tempPositions);
     }
 }
+document.getElementById("startScreen").addEventListener("click",function(){
+    document.getElementById("startScreen").classList.remove("show")
+    document.getElementById("menu").classList.add("show")
+})
+document.getElementById("tutorialButton").addEventListener("click",function(){
+    document.getElementById("menu").classList.remove("show")
+    document.getElementById("tutorial").classList.add("show")
+})

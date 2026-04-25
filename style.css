@@ -6,9 +6,28 @@ body {
     font-family: Bahnschrift, sans-serif;
 }
 
-#startScreen {
+.screen {
     height: 100%;
     text-align: center;
+
+    &:not(#startScreen) {
+        animation: 0.3s ease 0s fade-in;
+    }
+
+    &:not(.show) {
+        display: none;
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        display: block;
+        opacity: 0
+    }
+
+    100% {
+        opacity: 1
+    }
 }
 
 .block-large {
@@ -22,6 +41,22 @@ body {
 
     & span {
         line-height: 30vmin;
+        display: block;
+    }
+
+}
+
+.block-medium {
+    width: 15vmin;
+    height: 15vmin;
+    display: inline-block;
+    font-size: 10vmin;
+    border-radius: 5vmin;
+    font-weight: bold;
+    margin: 0.5vmin;
+
+    & span {
+        line-height: 15vmin;
         display: block;
     }
 
@@ -45,7 +80,8 @@ body {
     height: 20vh;
     font-size: 5vmin;
     color: gray;
-    animation: 5s linear 0 ybluiPresentsAnim;
+    opacity: 1;
+    animation: 5s step-end 0s ybluiPresentsAnim;
 
     & span {
 
@@ -56,6 +92,12 @@ body {
 
 #abContainer {
     height: 40vh;
+}
+
+#abContainerMedium {
+    height: 30vh;
+    padding: 7.5vh;
+    box-sizing: border-box;
 }
 
 #bottomText {
@@ -70,80 +112,166 @@ body {
 
 @keyframes ybluiPresentsAnim {
     0% {
-        display: none;
+        opacity: 0
     }
 
-    50% {
-        display: block;
+    15% {
+        opacity: 0
+    }
+
+    30% {
+        opacity: 0
+    }
+
+    45% {
+        opacity: 1
+    }
+
+    60% {
+        opacity: 0
     }
 
     75% {
-        display: none
+        opacity: 1
     }
 
     100% {
-        display: block;
+        opacity: 1
     }
 }
 
 @keyframes largeAAnim {
     0% {
-        display: inline-block;
+        opacity: 1
     }
 
-    25% {
-        display: none;
+    15% {
+        opacity: 0
+    }
+
+    30% {
+        opacity: 0
+    }
+
+    45% {
+        opacity: 0
+    }
+
+    60% {
+        opacity: 1
     }
 
     75% {
-        display: inline-block
+        opacity: 1
+    }
+
+    100% {
+        opacity: 1
     }
 }
 
 @keyframes largeBAnim {
     0% {
-        display: none;
+        opacity: 0
     }
 
-    25% {
-        display: inline-block;
+    15% {
+        opacity: 1
     }
 
-    50% {
-        display: none;
+    30% {
+        opacity: 0
+    }
+
+    45% {
+        opacity: 0
+    }
+
+    60% {
+        opacity: 1
     }
 
     75% {
-        display: inline-block
+        opacity: 1
+    }
+
+    100% {
+        opacity: 1
     }
 }
 
 @keyframes largePlusAnim {
     0% {
-        display: none;
+        opacity: 0
     }
 
-    25% {
-        display: inline-block;
+    15% {
+        opacity: 0
     }
 
-    50% {
-        display: none;
+    30% {
+        opacity: 1
+    }
+
+    45% {
+        opacity: 0
+    }
+
+    60% {
+        opacity: 0
     }
 
     75% {
-        display: inline-block
+        opacity: 1
+    }
+
+    100% {
+        opacity: 1
+    }
+}
+
+@keyframes bottomTextAnimation {
+    0% {
+        opacity: 0
+    }
+
+    75% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1
     }
 }
 
 #largeA {
-    animation: 5s linear 0 largeAAnim;
+    animation: 5s step-end 0s largeAAnim;
 }
 
 #largeB {
-    animation: 5s linear 0 largeBAnim;
+    animation: 5s step-end 0s largeBAnim;
 }
 
 #largePlus {
-    animation: 5s linear 0 largePlusAnim;
+    animation: 5s step-end 0s largePlusAnim;
+}
+
+#bottomText,
+#bottomTextMinor {
+    animation: 5s ease 0s bottomTextAnimation;
+}
+
+.option {
+    height: 10vh;
+    font-size: 5vh;
+    line-height: 10vh;
+}
+.board{
+    & .cell{
+        width:10vmin;
+        height:10vmin;
+        background-color: lightgray;
+        border-radius: 3vmin;
+        display: inline-block;
+    }
 }
