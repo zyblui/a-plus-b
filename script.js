@@ -62,9 +62,76 @@ function checkAvailability(char, x, y, board) {
 }
 function generatePuzzle(answer) {
     let solution = generateBoard(answer.size);
-}/*
+}
 function solve(puzzle, x, y) {
-    for (let i = 0; i < puzzle.length; i++) for (let j = 0; j < puzzle.length; j++) {
-        if(puzzle[i][j])
+    let solutionPositions = [], possiblePositions = [], tempPuzzle = puzzle;
+    for (let i = 0; i < puzzle.length; i++) {
+        possiblePositions.push([]);
+        for (let j = 0; j < puzzle.length; j++) possiblePositions[i].push([]);
     }
-}*/
+
+    for (let i = 0; i < puzzle.length; i++) for (let j = 0; j < puzzle.length; j++) {
+        if (puzzle[i][j] == "a") {
+            for (let dirIndex = 0; dirIndex < DIRECTIONS.length; dirIndex++) {
+                if (checkAvailability("+", i + DIRECTIONS[dirIndex].x, j + DIRECTIONS[dirIndex].y, puzzle) && checkAvailability("b", i + DIRECTIONS[dirIndex].x * 2, j + DIRECTIONS[dirIndex].y * 2, puzzle)) {
+                    possiblePositions[i][j].push({
+                        "x": i,
+                        "y": j,
+                        "dir": dirIndex
+                    });
+                }
+            }
+        } else if (puzzle[i][j] == "+") {
+            for (let dirIndex = 0; dirIndex < DIRECTIONS.length; dirIndex++) {
+                if (checkAvailability("a", i - DIRECTIONS[dirIndex].x, j - DIRECTIONS[dirIndex].y, puzzle) && checkAvailability("b", i + DIRECTIONS[dirIndex].x, j + DIRECTIONS[dirIndex].y, puzzle)) {
+                    possiblePositions[i][j].push({
+                        "x": i - DIRECTIONS[dirIndex].x,
+                        "y": j - DIRECTIONS[dirIndex].y,
+                        "dir": dirIndex
+                    });
+                }
+            }
+        } else if (puzzle[i][j] == "b") {
+            for (let dirIndex = 0; dirIndex < DIRECTIONS.length; dirIndex++) {
+                if (checkAvailability("a", i - DIRECTIONS[dirIndex].x * 2, j - DIRECTIONS[dirIndex].y * 2, puzzle) && checkAvailability("+", i - DIRECTIONS[dirIndex].x, j - DIRECTIONS[dirIndex].y, puzzle)) {
+                    possiblePositions[i][j].push({
+                        "x": i - DIRECTIONS[dirIndex].x * 2,
+                        "y": j - DIRECTIONS[dirIndex].y * 2,
+                        "dir": dirIndex
+                    });
+                }
+            }
+        }
+    }
+    for (let i = 0; i < puzzle.length; i++) for (let j = 0; j < puzzle.length; j++) {
+        if (possiblePositions[i][j].length) {
+            addChild(solutionPositions, possiblePositions[i][j]);
+        }
+    }
+    
+    let currentBranch = solutionPositions;
+    while (currentBranch.length) {
+        let i = currentBranch[0].position;
+        tempPuzzle[i.x][i.y] = "a";
+        tempPuzzle[i.x + DIRECTIONS[i.dir].x][i.y + DIRECTIONS[i.dir].y] = "+";
+        tempPuzzle[i.x + DIRECTIONS[i.dir].x * 2][i.y + DIRECTIONS[i.dir].y * 2] = "b";
+        currentBranch = currentBranch[0].branches;
+    }
+    return tempPuzzle;
+}
+function addChild(tree, positions) {
+    if (tree.length) {
+        for (let i of tree) {
+            addChild(i.branches, positions);
+        }
+    } else {
+        let tempPositions = [];
+        for (let position of positions) {
+            tempPositions.push({
+                "position": position,
+                "branches": []
+            });
+        }
+        tree.push(...tempPositions);
+    }
+}
