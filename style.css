@@ -1,0 +1,149 @@
+html,
+body {
+    height: 100%;
+    -webkit-user-select: none;
+    user-select: none;
+    font-family: Bahnschrift, sans-serif;
+}
+
+#startScreen {
+    height: 100%;
+    text-align: center;
+}
+
+.block-large {
+    width: 30vmin;
+    height: 30vmin;
+    display: inline-block;
+    font-size: 20vmin;
+    border-radius: 10vmin;
+    font-weight: bold;
+    margin: 1vmin;
+
+    & span {
+        line-height: 30vmin;
+        display: block;
+    }
+
+}
+
+.block-a {
+    background-color: hotpink;
+    color: white;
+}
+
+.block-plus {
+    background-color: gold;
+}
+
+.block-b {
+    background-color: dodgerblue;
+    color: white
+}
+
+#ybluiPresents {
+    height: 20vh;
+    font-size: 5vmin;
+    color: gray;
+    animation: 5s linear 0 ybluiPresentsAnim;
+
+    & span {
+
+        line-height: 20vh;
+        display: block;
+    }
+}
+
+#abContainer {
+    height: 40vh;
+}
+
+#bottomText {
+    height: 20vh;
+    font-size: 5vmin;
+}
+
+#bottomTextMinor {
+    font-size: 5vmin;
+    color: gray;
+}
+
+@keyframes ybluiPresentsAnim {
+    0% {
+        display: none;
+    }
+
+    50% {
+        display: block;
+    }
+
+    75% {
+        display: none
+    }
+
+    100% {
+        display: block;
+    }
+}
+
+@keyframes largeAAnim {
+    0% {
+        display: inline-block;
+    }
+
+    25% {
+        display: none;
+    }
+
+    75% {
+        display: inline-block
+    }
+}
+
+@keyframes largeBAnim {
+    0% {
+        display: none;
+    }
+
+    25% {
+        display: inline-block;
+    }
+
+    50% {
+        display: none;
+    }
+
+    75% {
+        display: inline-block
+    }
+}
+
+@keyframes largePlusAnim {
+    0% {
+        display: none;
+    }
+
+    25% {
+        display: inline-block;
+    }
+
+    50% {
+        display: none;
+    }
+
+    75% {
+        display: inline-block
+    }
+}
+
+#largeA {
+    animation: 5s linear 0 largeAAnim;
+}
+
+#largeB {
+    animation: 5s linear 0 largeBAnim;
+}
+
+#largePlus {
+    animation: 5s linear 0 largePlusAnim;
+}
