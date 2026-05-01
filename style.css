@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    margin: 0;
     -webkit-user-select: none;
     user-select: none;
     font-family: Bahnschrift, sans-serif;
@@ -261,15 +262,22 @@ body {
     animation: 5s ease 0s bottomTextAnimation;
 }
 
+.heading {
+    height: 20vh;
+    font-size: 10vh;
+    line-height: 20vh;
+}
+
 .option {
     height: 10vh;
     font-size: 5vh;
     line-height: 10vh;
 }
-.board{
-    & .cell{
-        width:10vmin;
-        height:10vmin;
+
+.board {
+    & .cell {
+        width: 10vmin;
+        height: 10vmin;
         background-color: lightgray;
         border-radius: 3vmin;
         display: inline-block;

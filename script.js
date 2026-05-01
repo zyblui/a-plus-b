@@ -60,11 +60,31 @@ function checkAvailability(char, x, y, board) {
     else return !((x - 1 >= 0 && board[x - 1][y] == char) || (x + 1 < board.length && board[x + 1][y] == char) || (y - 1 >= 0
         && board[x][y - 1] == char) || (y + 1 < board.length && board[x][y + 1] == char));
 }
-function generatePuzzle(answer) {
-    let solution = generateBoard(answer.size);
+function generatePuzzle(size) {
+    let answer = generateAnswer(size);
+    let answerPositions = answer.positions;
+    let tempBoard = generateBoard(size);
+    console.log(answerPositions.length);
+    for (let i = 0; i < 3 ** answerPositions.length - 1; i++) {
+        tempBoard = generateBoard(size);
+        for (let j = 0; j < answerPositions.length; j++) {
+            if (Math.floor((i / (3 ** j)) % (3 ** j)) == 0) tempBoard[answerPositions[j].x][answerPositions[j].y] = "a";
+            if (Math.floor((i / (3 ** j)) % (3 ** j)) == 1) tempBoard[answerPositions[j].x + DIRECTIONS[answerPositions[j].dir].x][answerPositions[j].y + DIRECTIONS[answerPositions[j].dir].y] = "+";
+            if (Math.floor((i / (3 ** j)) % (3 ** j)) == 2) tempBoard[answerPositions[j].x + DIRECTIONS[answerPositions[j].dir].x * 2][answerPositions[j].y + DIRECTIONS[answerPositions[j].dir].y * 2] = "b";
+        }
+        console.log(solve(tempBoard));
+    }
+
 }
+//0 1 2 3 4 5 6 7 8
+//0 1 2 0 1 2 0 1 2 (0)
+//0 0 0 1 1 1 2 2 2 (1)
 function solve(puzzle, x, y) {
-    let solutionPositions = [], possiblePositions = [], tempPuzzle = puzzle;
+    let possiblePositions = [], tempPuzzle = puzzle;
+    let solutionPositions = {
+        "board": puzzle,
+        "branches": []
+    };
     for (let i = 0; i < puzzle.length; i++) {
         possiblePositions.push([]);
         for (let j = 0; j < puzzle.length; j++) possiblePositions[i].push([]);
@@ -103,43 +123,62 @@ function solve(puzzle, x, y) {
             }
         }
     }
+    let targetDepth = 0, finalDepth = 0;
     for (let i = 0; i < puzzle.length; i++) for (let j = 0; j < puzzle.length; j++) {
         if (possiblePositions[i][j].length) {
-            addChild(solutionPositions, possiblePositions[i][j]);
+            finalDepth++;
         }
     }
-    
-    let currentBranch = solutionPositions;
-    while (currentBranch.length) {
-        let i = currentBranch[0].position;
-        tempPuzzle[i.x][i.y] = "a";
-        tempPuzzle[i.x + DIRECTIONS[i.dir].x][i.y + DIRECTIONS[i.dir].y] = "+";
-        tempPuzzle[i.x + DIRECTIONS[i.dir].x * 2][i.y + DIRECTIONS[i.dir].y * 2] = "b";
-        currentBranch = currentBranch[0].branches;
+    for (let i = 0; i < puzzle.length; i++) for (let j = 0; j < puzzle.length; j++) {
+        if (possiblePositions[i][j].length) {
+            targetDepth++;
+            addChild(solutionPositions, possiblePositions[i][j], 1, targetDepth, finalDepth);
+            if (finalDepth == targetDepth) return solutionBoard;
+        }
     }
-    return tempPuzzle;
 }
-function addChild(tree, positions) {
-    if (tree.length) {
-        for (let i of tree) {
-            addChild(i.branches, positions);
+let solutionBoard = [];
+function addChild(node, positions, depth, targetDepth, finalDepth) {
+    if (node.branches.length) {
+        for (let i of node.branches) {
+            addChild(i, positions, depth + 1, targetDepth, finalDepth);
         }
-    } else {
+    } else if (depth == targetDepth) {
         let tempPositions = [];
         for (let position of positions) {
+            let tempBoard = structuredClone(node.board);
+            if (!((tempBoard[position.x][position.y] == "a" || checkAvailability("a", position.x, position.y, tempBoard))
+                && (tempBoard[position.x + DIRECTIONS[position.dir].x][position.y + DIRECTIONS[position.dir].y] == "+" || checkAvailability("+", position.x + DIRECTIONS[position.dir].x, position.y + DIRECTIONS[position.dir].y, tempBoard))
+                && (tempBoard[position.x + DIRECTIONS[position.dir].x * 2][position.y + DIRECTIONS[position.dir].y * 2] == "b" || checkAvailability("b", position.x + DIRECTIONS[position.dir].x * 2, position.y + DIRECTIONS[position.dir].y * 2, tempBoard)))) continue;
+            tempBoard[position.x][position.y] = "a";
+            tempBoard[position.x + DIRECTIONS[position.dir].x][position.y + DIRECTIONS[position.dir].y] = "+";
+            tempBoard[position.x + DIRECTIONS[position.dir].x * 2][position.y + DIRECTIONS[position.dir].y * 2] = "b";
+
             tempPositions.push({
+                "board": tempBoard,
                 "position": position,
                 "branches": []
             });
         }
-        tree.push(...tempPositions);
+        node.branches.push(...tempPositions);
+        if (targetDepth == finalDepth && node.branches.length) {
+            solutionBoard = node.branches[0].board;
+        }
     }
 }
-document.getElementById("startScreen").addEventListener("click",function(){
-    document.getElementById("startScreen").classList.remove("show")
-    document.getElementById("menu").classList.add("show")
-})
-document.getElementById("tutorialButton").addEventListener("click",function(){
-    document.getElementById("menu").classList.remove("show")
-    document.getElementById("tutorial").classList.add("show")
-})
+document.getElementById("startScreen").addEventListener("click", function () {
+    document.getElementById("startScreen").classList.remove("show");
+    document.getElementById("menu").classList.add("show");
+});
+document.getElementById("tutorialButton").addEventListener("click", function () {
+    document.getElementById("menu").classList.remove("show");
+    document.getElementById("tutorial").classList.add("show");
+});
+document.getElementById("freePlay").addEventListener("click", function () {
+    document.getElementById("menu").classList.remove("show");
+    document.getElementById("freePlayMenu").classList.add("show");
+});
+document.getElementById("todaysPuzzles").addEventListener("click", function () {
+    document.getElementById("menu").classList.remove("show");
+    document.getElementById("todaysPuzzlesMenu").classList.add("show");
+});
