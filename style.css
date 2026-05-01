@@ -74,7 +74,7 @@ body {
 
 .block-b {
     background-color: dodgerblue;
-    color: white
+    color: white;
 }
 
 #ybluiPresents {
@@ -278,8 +278,30 @@ body {
     & .cell {
         width: 10vmin;
         height: 10vmin;
-        background-color: lightgray;
+        font-size: 5vmin;
+        line-height: 10vmin;
+        vertical-align: top;
+        margin: .5vmin;
+        font-weight: bold;
+
+        &:not(.block-a):not(.block-b):not(.block-plus) {
+            background-color: lightgray;
+        }
+
         border-radius: 3vmin;
         display: inline-block;
+    }
+}
+
+#tutorialTips .tip {
+    font-size: 4vh;
+    height: 20vh;
+
+    &:not(#welcome) {
+        animation: 0.3s ease 0s fade-in;
+    }
+
+    &:not(.show) {
+        display: none;
     }
 }

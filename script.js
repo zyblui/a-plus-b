@@ -182,3 +182,16 @@ document.getElementById("todaysPuzzles").addEventListener("click", function () {
     document.getElementById("menu").classList.remove("show");
     document.getElementById("todaysPuzzlesMenu").classList.add("show");
 });
+document.getElementById("tutorialClose").addEventListener("click", function () {
+    document.getElementById("tutorial").classList.remove("show");
+    document.getElementById("menu").classList.add("show");
+});
+document.getElementById("tutorial").addEventListener("click", function () {
+    if (document.getElementById("welcome").classList.contains("show")) {
+        document.getElementById("welcome").classList.remove("show");
+        document.getElementById("objective").classList.add("show");
+    } else if (document.getElementById("objective").classList.contains("show")) {
+        document.getElementById("objective").classList.remove("show");
+        document.getElementById("objective2").classList.add("show");
+    }
+});
